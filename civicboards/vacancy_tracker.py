@@ -1,4 +1,4 @@
-"""Vacancy tracking helpers for CivicBoards v0.1.0."""
+"""Vacancy tracking helpers for CivicBoards v0.1.1."""
 
 from __future__ import annotations
 

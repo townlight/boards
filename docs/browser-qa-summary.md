@@ -1,4 +1,4 @@
-# Browser QA - CivicBoards v0.1.0
+# Browser QA - CivicBoards v0.1.1
 
 docs-desktop: 1440px, console_errors=0
 docs-mobile: 390px, console_errors=0

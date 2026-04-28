@@ -66,7 +66,7 @@ def root() -> dict[str, str]:
             "live LLM calls, meeting system write-back, and board system-of-record integrations "
             "are not implemented yet."
         ),
-        "next_step": "Post-v0.1.0 roadmap: CivicClerk agenda handoff, public vacancy pages, and staff review queues",
+        "next_step": "Post-v0.1.1 roadmap: CivicClerk agenda handoff, public vacancy pages, and staff review queues",
     }
 
 
