@@ -1,4 +1,4 @@
-"""Term tracking helpers for CivicBoards v0.1.0."""
+"""Term tracking helpers for CivicBoards v0.1.1."""
 
 from __future__ import annotations
 

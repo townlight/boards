@@ -9,10 +9,10 @@
 ## Hard Boundaries
 
 - CivicBoards never appoints members, removes members, publishes official notices, provides legal advice, writes back to meeting systems, or updates a board system of record.
-- CivicBoards v0.1.0 must not call live LLMs or live agenda systems.
+- CivicBoards v0.1.1 must not call live LLMs or live agenda systems.
 - Term tracking, vacancy tracking, attendance review, and records exports must be marked staff-review-required where applicable.
 - CivicBoards depends on CivicCore; CivicCore must never depend on CivicBoards.
-- CivicBoards may reference CivicClerk meeting concepts only through released APIs or deterministic sample data in v0.1.0.
+- CivicBoards may reference CivicClerk meeting concepts only through released APIs or deterministic sample data in v0.1.1.
 
 ## Verification
 
