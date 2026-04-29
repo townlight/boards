@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.1.1] - 2026-04-28
 
+### Added
+
+- Optional SQLAlchemy-backed board roster and attendance review records via `CIVICBOARDS_ROSTER_DB_URL`.
+- Board roster and attendance review retrieval endpoints for persisted records.
+
 ### Changed
 
 - Aligned CivicBoards to `civiccore==0.3.0`.

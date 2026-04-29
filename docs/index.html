@@ -12,12 +12,12 @@
 <header>
   <p class="eyebrow">CivicSuite / CivicBoards</p>
   <h1>Board service needs clean records before it needs ceremony.</h1>
-  <p class="lede">CivicBoards v0.1.1 ships a foundation for board registry, term tracking, vacancy tracking, attendance review, notice/records export checklists, and an accessible sample UI aligned to civiccore==0.3.0.</p>
+  <p class="lede">CivicBoards v0.1.1 ships a foundation for board registry, term tracking, vacancy tracking, attendance review, optional database-backed roster records, notice/records export checklists, and an accessible sample UI aligned to civiccore==0.3.0.</p>
   <p><span class="badge">Shipping v0.1.1</span></p>
 </header>
 <main>
   <section class="grid">
-    <article class="card"><h2>What ships</h2><ul><li>Sample board registry.</li><li>Term review plans.</li><li>Vacancy checklists.</li><li>Attendance review flags.</li><li>Notice and records export checklist.</li><li>Public sample UI at <code>/civicboards</code>.</li></ul></article>
+    <article class="card"><h2>What ships</h2><ul><li>Sample board registry.</li><li>Term review plans.</li><li>Vacancy checklists.</li><li>Attendance review flags.</li><li>Optional roster persistence with <code>CIVICBOARDS_ROSTER_DB_URL</code>.</li><li>Notice and records export checklist.</li><li>Public sample UI at <code>/civicboards</code>.</li></ul></article>
     <article class="card"><h2>What does not ship</h2><p>CivicBoards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or replace a board system of record.</p></article>
     <article class="card"><h2>Repository</h2><p><a href="https://github.com/CivicSuite/civicboards">github.com/CivicSuite/civicboards</a></p></article>
     <article class="card"><h2>Dependency</h2><p>Pinned to <code>civiccore==0.3.0</code>. CivicCore remains dependency-only; it never imports from CivicBoards.</p></article>
