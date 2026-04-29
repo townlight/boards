@@ -16,7 +16,8 @@ def test_root_endpoint_states_runtime_boundary() -> None:
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == "CivicBoards"
-    assert data["status"] == "board administration foundation"
+    assert data["status"] == "board administration foundation plus roster persistence"
+    assert "database-backed board roster and attendance review records" in data["message"]
     assert "appointment decisions" in data["message"]
     assert data["version"] == "0.1.1"
     assert "Post-v0.1.1 roadmap" in data["next_step"]

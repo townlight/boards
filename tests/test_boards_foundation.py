@@ -91,6 +91,7 @@ def test_board_support_apis_success_shape() -> None:
     assert vacancies.json()["public_notice_required"] is True
     assert attendance.status_code == 200
     assert attendance.json()["attendance_status"] == "review-required"
+    assert attendance.json()["attendance_id"] is None
     assert export.status_code == 200
     assert export.json()["board_id"] == "pc-001"
 
