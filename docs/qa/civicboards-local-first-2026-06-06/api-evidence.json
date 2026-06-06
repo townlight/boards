@@ -1,0 +1,153 @@
+{
+  "health": {
+    "status": 200,
+    "data": {
+      "status": "ok",
+      "service": "civicboards",
+      "version": "0.1.1",
+      "civiccore_version": "1.2.0"
+    }
+  },
+  "ready": {
+    "status": 200,
+    "data": {
+      "status": "ready",
+      "ready": true,
+      "roster_database_configured": true,
+      "roster_database_url": "sqlite+pysqlite:///C:/dev/Claude/civicboards/.tmp-civicboards-walkthrough-data/civicboards-roster.db",
+      "using_default_local_database": true,
+      "schema_ready": true,
+      "schema_version": "civicboards-local-first-v1",
+      "expected_schema_version": "civicboards-local-first-v1",
+      "blockers": []
+    }
+  },
+  "contracts": {
+    "status": 200,
+    "data": {
+      "module": "civicboards",
+      "version": "0.1.1",
+      "contracts": [
+        {
+          "name": "civicboards.board_roster.v1",
+          "endpoint": "/api/v1/civicboards/registry",
+          "method": "POST",
+          "boundary": "Creates board roster records; it does not appoint or remove members."
+        },
+        {
+          "name": "civicboards.staff_review_queue.v1",
+          "endpoint": "/api/v1/civicboards/staff/reviews",
+          "method": "GET",
+          "requires_staff_key": true,
+          "boundary": "Staff-only queue for board, term, vacancy, and attendance review."
+        },
+        {
+          "name": "civicboards.notice_packet.v1",
+          "endpoint": "/api/v1/civicboards/vacancies",
+          "method": "POST",
+          "boundary": "Builds vacancy notice checklists; it does not publish official notices."
+        },
+        {
+          "name": "civicboards.records_export.v1",
+          "endpoint": "/api/v1/civicboards/export",
+          "method": "POST",
+          "boundary": "Builds records export checklists; it does not publish or redact records."
+        }
+      ],
+      "downstream_ready_for": [
+        "civicclerk agenda board appointments",
+        "civicnotice public vacancy notices",
+        "civicrecords-ai board file retention",
+        "civiclegal eligibility review"
+      ]
+    }
+  },
+  "registryCreate": {
+    "status": 200,
+    "data": {
+      "board_id": "walkthrough-board",
+      "board_name": "Walkthrough Planning Board",
+      "liaison": "clerk@example.gov",
+      "roster_notes": [
+        "Confirm enabling authority, appointment body, term length, quorum rule, and vacancy rule.",
+        "Attach member roster, terms, liaison contact, public page link, and adopted bylaws if available.",
+        "Route agendas, packets, minutes, attendance, and notices through staff-owned review."
+      ],
+      "disclaimer": "CivicBoards supports board and commission administration, but staff remain responsible for appointments, attendance determinations, notices, minutes, and statutory compliance."
+    }
+  },
+  "registryGet": {
+    "status": 200,
+    "data": {
+      "board_id": "walkthrough-board",
+      "board_name": "Walkthrough Planning Board",
+      "liaison": "clerk@example.gov",
+      "roster_notes": [
+        "Confirm enabling authority, appointment body, term length, quorum rule, and vacancy rule.",
+        "Attach member roster, terms, liaison contact, public page link, and adopted bylaws if available.",
+        "Route agendas, packets, minutes, attendance, and notices through staff-owned review."
+      ],
+      "disclaimer": "CivicBoards supports board and commission administration, but staff remain responsible for appointments, attendance determinations, notices, minutes, and statutory compliance."
+    }
+  },
+  "attendanceCreate": {
+    "status": 200,
+    "data": {
+      "attendance_id": "2aed5eeb-7375-4d40-b0e9-46df6da1e054",
+      "member_name": "Avery Patel",
+      "meetings_attended": 2,
+      "meetings_held": 5,
+      "attendance_status": "review-required",
+      "review_notes": [
+        "Attendance rate: 2/5.",
+        "Staff must verify excused absences, resignation rules, and removal thresholds.",
+        "Do not remove or replace a member without clerk/legal review."
+      ],
+      "staff_review_required": true,
+      "disclaimer": "CivicBoards supports board and commission administration, but staff remain responsible for appointments, attendance determinations, notices, minutes, and statutory compliance.",
+      "created_at": "2026-06-06T21:34:17.417696+00:00"
+    }
+  },
+  "attendanceGet": {
+    "status": 200,
+    "data": {
+      "attendance_id": "2aed5eeb-7375-4d40-b0e9-46df6da1e054",
+      "member_name": "Avery Patel",
+      "meetings_attended": 2,
+      "meetings_held": 5,
+      "attendance_status": "review-required",
+      "review_notes": [
+        "Attendance rate: 2/5.",
+        "Staff must verify excused absences, resignation rules, and removal thresholds.",
+        "Do not remove or replace a member without clerk/legal review."
+      ],
+      "staff_review_required": true,
+      "disclaimer": "CivicBoards supports board and commission administration, but staff remain responsible for appointments, attendance determinations, notices, minutes, and statutory compliance.",
+      "created_at": "2026-06-06T21:34:17.417696"
+    }
+  },
+  "staffDenied": {
+    "status": 503,
+    "data": {
+      "detail": {
+        "message": "Staff API key auth is not configured.",
+        "fix": "Set CIVICBOARDS_STAFF_API_KEY before using staff-only routes."
+      }
+    }
+  },
+  "export": {
+    "status": 200,
+    "data": {
+      "board_id": "walkthrough-board",
+      "title": "Walkthrough board records packet",
+      "checklist": [
+        "Preserve agenda, packet, notice, minutes, attendance, roster, and appointment records.",
+        "Confirm closed/session-sensitive material is excluded before public release.",
+        "Include file hashes, export timestamp, board identifier, and reviewer initials.",
+        "Record whether the export is for public portal, records request, or staff archive."
+      ],
+      "retention_note": "Export format 'markdown' must follow the city's retention schedule.",
+      "disclaimer": "CivicBoards supports board and commission administration, but staff remain responsible for appointments, attendance determinations, notices, minutes, and statutory compliance."
+    }
+  }
+}
