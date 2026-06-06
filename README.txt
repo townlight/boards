@@ -2,7 +2,7 @@
 
 CivicBoards is the CivicSuite module for board and commission roster support, term tracking, vacancy tracking, attendance review, and notice/records export checklists.
 
-Current state: v0.1.1 board administration foundation plus roster persistence release. This repo ships a FastAPI package, health/root endpoints, documentation gates, deterministic sample board registry, term review plans, vacancy checklists, attendance summaries, optional database-backed board roster and attendance review records, notice/records export checklist, and accessible public sample UI at /civicboards, aligned to civiccore==0.3.0. It does not ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
+Current state: v0.1.1 local-first board administration and staff review runtime. It ships deterministic sample helpers, default local SQLite-backed board roster, attendance review records, staff review queues, integration contracts, an accessible public sample UI at /civicboards, and a staff workspace at /civicboards/staff, aligned to the published CivicCore v1.2.0 release wheel. It does not ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
 
 ## What CivicBoards Does
 

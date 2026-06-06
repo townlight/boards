@@ -12,15 +12,15 @@
 <header>
   <p class="eyebrow">CivicSuite / CivicBoards</p>
   <h1>Board service needs clean records before it needs ceremony.</h1>
-  <p class="lede">CivicBoards v0.1.1 ships a foundation for board registry, term tracking, vacancy tracking, attendance review, optional database-backed roster records, notice/records export checklists, and an accessible sample UI aligned to civiccore==0.3.0.</p>
+  <p class="lede">CivicBoards v0.1.1 ships local-first board registry support, term tracking, vacancy tracking, attendance review records, staff review queues, integration contracts, notice/records export checklists, and accessible public/staff UI aligned to the published CivicCore v1.2.0 release wheel.</p>
   <p><span class="badge">Shipping v0.1.1</span></p>
 </header>
 <main>
   <section class="grid">
-    <article class="card"><h2>What ships</h2><ul><li>Sample board registry.</li><li>Term review plans.</li><li>Vacancy checklists.</li><li>Attendance review flags.</li><li>Optional roster persistence with <code>CIVICBOARDS_ROSTER_DB_URL</code>.</li><li>Notice and records export checklist.</li><li>Public sample UI at <code>/civicboards</code>.</li></ul></article>
+    <article class="card"><h2>What ships</h2><ul><li>Sample board registry.</li><li>Term review plans.</li><li>Vacancy checklists.</li><li>Attendance review flags.</li><li>Default local SQLite roster, attendance, and staff review persistence.</li><li>Notice and records export checklist.</li><li>Public sample UI at <code>/civicboards</code> and staff UI at <code>/civicboards/staff</code>.</li></ul></article>
     <article class="card"><h2>What does not ship</h2><p>CivicBoards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or replace a board system of record.</p></article>
     <article class="card"><h2>Repository</h2><p><a href="https://github.com/CivicSuite/civicboards">github.com/CivicSuite/civicboards</a></p></article>
-    <article class="card"><h2>Dependency</h2><p>Pinned to <code>civiccore==0.3.0</code>. CivicCore remains dependency-only; it never imports from CivicBoards.</p></article>
+    <article class="card"><h2>Dependency</h2><p>Pinned to the published CivicCore v1.2.0 release wheel. CivicCore remains dependency-only; it never imports from CivicBoards.</p></article>
   </section>
 </main>
 <footer><p>Apache 2.0 code. CC BY 4.0 docs. Run locally by the city.</p></footer>

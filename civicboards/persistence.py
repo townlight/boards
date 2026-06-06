@@ -41,6 +41,29 @@ attendance_review_records = sa.Table(
     schema="civicboards",
 )
 
+staff_review_queue_records = sa.Table(
+    "staff_review_queue_records",
+    metadata,
+    sa.Column("review_id", sa.String(36), primary_key=True),
+    sa.Column("board_id", sa.String(160), nullable=False),
+    sa.Column("title", sa.String(500), nullable=False),
+    sa.Column("reason", sa.Text(), nullable=False),
+    sa.Column("status", sa.String(120), nullable=False),
+    sa.Column("assigned_to", sa.String(255), nullable=True),
+    sa.Column("resolution", sa.Text(), nullable=True),
+    sa.Column("created_by", sa.String(160), nullable=False),
+    sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    schema="civicboards",
+)
+
+
+@dataclass(frozen=True)
+class SchemaStatus:
+    ready: bool
+    schema_version: str
+    expected_schema_version: str
+
 
 @dataclass(frozen=True)
 class StoredAttendanceReview:
@@ -55,8 +78,24 @@ class StoredAttendanceReview:
     created_at: datetime
 
 
+@dataclass(frozen=True)
+class StaffReviewQueueItem:
+    review_id: str
+    board_id: str
+    title: str
+    reason: str
+    status: str
+    assigned_to: str | None
+    resolution: str | None
+    created_by: str
+    created_at: datetime
+    updated_at: datetime
+
+
 class BoardRosterRepository:
     """SQLAlchemy-backed board roster and attendance-review records."""
+
+    expected_schema_version = "civicboards-local-first-v1"
 
     def __init__(self, *, db_url: str | None = None, engine: Engine | None = None, seed_defaults: bool = True) -> None:
         base_engine = engine or create_engine(db_url or "sqlite+pysqlite:///:memory:", future=True)
@@ -69,6 +108,27 @@ class BoardRosterRepository:
         metadata.create_all(self.engine)
         if seed_defaults:
             self.seed_sample_boards()
+
+    def schema_status(self) -> SchemaStatus:
+        try:
+            with self.engine.begin() as connection:
+                for table in (
+                    board_roster_records,
+                    attendance_review_records,
+                    staff_review_queue_records,
+                ):
+                    connection.execute(sa.select(sa.func.count()).select_from(table)).scalar_one()
+        except Exception:
+            return SchemaStatus(
+                ready=False,
+                schema_version="unavailable",
+                expected_schema_version=self.expected_schema_version,
+            )
+        return SchemaStatus(
+            ready=True,
+            schema_version=self.expected_schema_version,
+            expected_schema_version=self.expected_schema_version,
+        )
 
     def seed_sample_boards(self) -> None:
         samples = (
@@ -168,6 +228,13 @@ class BoardRosterRepository:
                     created_at=stored.created_at,
                 )
             )
+        if stored.staff_review_required:
+            self.create_staff_review_queue_item(
+                board_id="attendance-review",
+                title=f"Attendance review: {stored.member_name}",
+                reason="Attendance summary requires staff review before vacancy, removal, or appointment action.",
+                created_by="system",
+            )
         return stored
 
     def get_attendance_review(self, attendance_id: str) -> StoredAttendanceReview | None:
@@ -180,6 +247,54 @@ class BoardRosterRepository:
         if row is None:
             return None
         return _row_to_attendance(row)
+
+    def create_staff_review_queue_item(
+        self,
+        *,
+        board_id: str,
+        title: str,
+        reason: str,
+        created_by: str = "staff",
+    ) -> StaffReviewQueueItem:
+        now = datetime.now(UTC)
+        item = StaffReviewQueueItem(
+            review_id=str(uuid4()),
+            board_id=board_id.strip() or "unassigned-board",
+            title=title.strip() or "Untitled board review",
+            reason=reason.strip() or "Board staff review required.",
+            status="open",
+            assigned_to=None,
+            resolution=None,
+            created_by=created_by.strip() or "staff",
+            created_at=now,
+            updated_at=now,
+        )
+        with self.engine.begin() as connection:
+            connection.execute(
+                staff_review_queue_records.insert().values(
+                    review_id=item.review_id,
+                    board_id=item.board_id,
+                    title=item.title,
+                    reason=item.reason,
+                    status=item.status,
+                    assigned_to=item.assigned_to,
+                    resolution=item.resolution,
+                    created_by=item.created_by,
+                    created_at=item.created_at,
+                    updated_at=item.updated_at,
+                )
+            )
+        return item
+
+    def list_staff_review_queue_items(self, status: str | None = None) -> list[StaffReviewQueueItem]:
+        query = sa.select(staff_review_queue_records).order_by(
+            staff_review_queue_records.c.updated_at.desc()
+        )
+        if status:
+            query = query.where(staff_review_queue_records.c.status == status)
+        with self.engine.begin() as connection:
+            rows = connection.execute(query).mappings().all()
+        return [_row_to_staff_review(row) for row in rows]
 
 
 def _row_to_board(row: object) -> BoardRoster:
@@ -205,4 +320,20 @@ def _row_to_attendance(row: object) -> StoredAttendanceReview:
         staff_review_required=data["staff_review_required"],
         disclaimer=data["disclaimer"],
         created_at=data["created_at"],
+    )
+
+
+def _row_to_staff_review(row: object) -> StaffReviewQueueItem:
+    data = dict(row)
+    return StaffReviewQueueItem(
+        review_id=data["review_id"],
+        board_id=data["board_id"],
+        title=data["title"],
+        reason=data["reason"],
+        status=data["status"],
+        assigned_to=data["assigned_to"],
+        resolution=data["resolution"],
+        created_by=data["created_by"],
+        created_at=data["created_at"],
+        updated_at=data["updated_at"],
     )

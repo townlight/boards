@@ -76,16 +76,23 @@ def test_roster_persistence_api_round_trip(monkeypatch, tmp_path: Path) -> None:
     db_path.unlink()
 
 
-def test_get_board_without_persistence_returns_actionable_503(monkeypatch) -> None:
+def test_get_board_uses_default_local_persistence(monkeypatch) -> None:
     monkeypatch.delenv("CIVICBOARDS_ROSTER_DB_URL", raising=False)
     _dispose_roster_repository()
 
+    created = client.post(
+        "/api/v1/civicboards/registry",
+        json={
+            "board_id": "pc-001",
+            "board_name": "Planning Commission",
+            "liaison": "clerk@example.gov",
+        },
+    )
     response = client.get("/api/v1/civicboards/registry/pc-001")
 
-    assert response.status_code == 503
-    detail = response.json()["detail"]
-    assert detail["message"] == "CivicBoards roster persistence is not configured."
-    assert "Set CIVICBOARDS_ROSTER_DB_URL" in detail["fix"]
+    assert created.status_code == 200
+    assert response.status_code == 200
+    assert response.json()["board_name"] == "Planning Commission"
 
 
 def test_get_attendance_missing_id_returns_actionable_404(monkeypatch, tmp_path: Path) -> None:
@@ -103,3 +110,54 @@ def test_get_attendance_missing_id_returns_actionable_404(monkeypatch, tmp_path:
     assert detail["message"] == "Attendance review record not found."
     assert "POST /api/v1/civicboards/attendance" in detail["fix"]
     db_path.unlink()
+
+
+def test_staff_review_queue_requires_key_and_returns_items(monkeypatch) -> None:
+    monkeypatch.setenv("CIVICBOARDS_STAFF_API_KEY", "local-boards-key")
+    created = client.post(
+        "/api/v1/civicboards/staff/reviews",
+        headers={
+            "X-CivicBoards-Role": "staff",
+            "X-CivicBoards-Staff-Key": "local-boards-key",
+        },
+        json={
+            "board_id": "pc-001",
+            "title": "Planning Commission vacancy review",
+            "reason": "Vacancy notice and appointment workflow need staff review.",
+        },
+    )
+
+    denied = client.get("/api/v1/civicboards/staff/reviews")
+    allowed = client.get(
+        "/api/v1/civicboards/staff/reviews",
+        headers={
+            "X-CivicBoards-Role": "staff",
+            "X-CivicBoards-Staff-Key": "local-boards-key",
+        },
+    )
+
+    assert created.status_code == 200
+    assert denied.status_code in {401, 403}
+    assert allowed.status_code == 200
+    assert allowed.json()["visibility"] == "staff_only"
+    assert allowed.json()["items"][0]["board_id"] == "pc-001"
+
+
+def test_attendance_review_creates_staff_review_queue_item(monkeypatch) -> None:
+    monkeypatch.setenv("CIVICBOARDS_STAFF_API_KEY", "local-boards-key")
+    attendance = client.post(
+        "/api/v1/civicboards/attendance",
+        json={"member_name": "Avery Patel", "meetings_attended": 2, "meetings_held": 5},
+    )
+    queue = client.get(
+        "/api/v1/civicboards/staff/reviews",
+        headers={
+            "X-CivicBoards-Role": "staff",
+            "X-CivicBoards-Staff-Key": "local-boards-key",
+        },
+    )
+
+    assert attendance.status_code == 200
+    assert attendance.json()["staff_review_required"] is True
+    assert queue.status_code == 200
+    assert any("Attendance review" in item["title"] for item in queue.json()["items"])

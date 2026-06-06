@@ -91,7 +91,7 @@ def test_board_support_apis_success_shape() -> None:
     assert vacancies.json()["public_notice_required"] is True
     assert attendance.status_code == 200
     assert attendance.json()["attendance_status"] == "review-required"
-    assert attendance.json()["attendance_id"] is None
+    assert attendance.json()["attendance_id"]
     assert export.status_code == 200
     assert export.json()["board_id"] == "pc-001"
 
@@ -106,3 +106,16 @@ def test_public_ui_route_is_accessible_and_honest() -> None:
     assert "v0.1.1 board administration foundation" in text
     assert "does not appoint members" in text
     assert "system of record" in text
+
+
+def test_staff_ui_route_is_accessible_and_uses_safe_dom_updates() -> None:
+    response = client.get("/civicboards/staff")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    text = response.text
+    assert '<main id="main" tabindex="-1">' in text
+    assert "Board roster review" in text
+    assert "/api/v1/civicboards/staff/reviews" in text
+    assert "/api/v1/civicboards/registry" in text
+    assert "textContent" in text
+    assert "innerHTML" not in text
