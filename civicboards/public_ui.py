@@ -67,7 +67,7 @@ def render_public_lookup_page() -> str:
     <article class="card large"><p class="kicker">Boundary</p><h2>No appointment decisions</h2><div class="result warning"><p>CivicBoards does not appoint members, remove members, make legal determinations, call live LLMs, publish official notices, or replace the clerk's board system of record.</p></div></article>
   </section>
 </main>
-<footer><p>CivicBoards is part of the Apache 2.0 CivicSuite open-source municipal AI project.</p></footer>
+<footer><p>CivicBoards is part of the AGPL-3.0 CivicSuite open-source municipal AI project.</p></footer>
 </body>
 </html>
 """

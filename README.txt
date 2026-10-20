@@ -47,4 +47,4 @@ bash scripts/verify-release.sh
 
 ## License
 
-Code is Apache License 2.0. Documentation is CC BY 4.0.
+Code is AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying deployments (see LICENSE and LICENSE-EXCEPTION.md). Documentation is CC BY 4.0.
