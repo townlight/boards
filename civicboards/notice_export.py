@@ -1,4 +1,4 @@
-"""Notice and records export helpers for CivicBoards v0.1.1."""
+"""Notice and records export helpers for Townlight Boards v0.1.1."""
 
 from __future__ import annotations
 
