@@ -1,4 +1,4 @@
-"""Attendance tracking helpers for CivicBoards v0.1.1."""
+"""Attendance tracking helpers for Townlight Boards v0.1.1."""
 
 from __future__ import annotations
 

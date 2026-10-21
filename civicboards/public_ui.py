@@ -1,17 +1,17 @@
-"""Static public UI shell for CivicBoards v0.1.1."""
+"""Static public UI shell for Townlight Boards v0.1.1."""
 
 from __future__ import annotations
 
 
 def render_public_lookup_page() -> str:
-    """Render the public-facing CivicBoards sample page."""
+    """Render the public-facing Townlight Boards sample page."""
 
     return """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CivicBoards Board and Commission Support</title>
+<title>Townlight Boards Board and Commission Support</title>
 <style>
   :root { --ink:#17202a; --muted:#586470; --paper:#f7fbff; --blue:#244f73; --green:#2f654c; --gold:#d8ad48; --line:#c9d5df; }
   * { box-sizing: border-box; }
@@ -44,9 +44,9 @@ def render_public_lookup_page() -> str:
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header>
-  <p class="eyebrow">CivicSuite / CivicBoards public sample</p>
+  <p class="eyebrow">Townlight / Townlight Boards public sample</p>
   <h1>Board rosters, terms, and vacancies without spreadsheet drift.</h1>
-  <p class="lede">CivicBoards demonstrates board and commission administration support: roster stubs, term reminders, vacancy checklists, attendance review, and public-records-aware exports without making appointments or legal determinations.</p>
+  <p class="lede">Townlight Boards demonstrates board and commission administration support: roster stubs, term reminders, vacancy checklists, attendance review, and public-records-aware exports without making appointments or legal determinations.</p>
   <p><span class="badge">v0.1.1 board administration foundation</span></p>
 </header>
 <main id="main" tabindex="-1">
@@ -61,13 +61,13 @@ def render_public_lookup_page() -> str:
         <ul><li>Confirm enabling authority, appointment body, term length, quorum rule, and vacancy rule.</li><li>Track upcoming term ends and public vacancy notices.</li><li>Preserve agendas, packets, minutes, attendance, and appointment records.</li></ul>
       </div>
     </article>
-    <article class="card"><p class="kicker">Terms</p><h2>Reminders, not reappointments</h2><div class="result"><p>CivicBoards surfaces term-end deadlines; staff decide eligibility and appointment timing.</p></div></article>
+    <article class="card"><p class="kicker">Terms</p><h2>Reminders, not reappointments</h2><div class="result"><p>Townlight Boards surfaces term-end deadlines; staff decide eligibility and appointment timing.</p></div></article>
     <article class="card"><p class="kicker">Vacancies</p><h2>Public notice ready</h2><div class="result"><p>Vacancy helpers collect seat, term, authority, application-window, and notice-review context.</p></div></article>
     <article class="card"><p class="kicker">Attendance</p><h2>Review flags</h2><div class="result"><p>Attendance summaries flag review needs without removing or replacing members.</p></div></article>
-    <article class="card large"><p class="kicker">Boundary</p><h2>No appointment decisions</h2><div class="result warning"><p>CivicBoards does not appoint members, remove members, make legal determinations, call live LLMs, publish official notices, or replace the clerk's board system of record.</p></div></article>
+    <article class="card large"><p class="kicker">Boundary</p><h2>No appointment decisions</h2><div class="result warning"><p>Townlight Boards does not appoint members, remove members, make legal determinations, call live LLMs, publish official notices, or replace the clerk's board system of record.</p></div></article>
   </section>
 </main>
-<footer><p>CivicBoards is part of the AGPL-3.0 CivicSuite open-source municipal AI project.</p></footer>
+<footer><p>Townlight Boards is part of the AGPL-3.0 Townlight open-source municipal AI project.</p></footer>
 </body>
 </html>
 """

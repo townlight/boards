@@ -1,4 +1,4 @@
-"""FastAPI runtime foundation for CivicBoards."""
+"""FastAPI runtime foundation for Townlight Boards."""
 
 import os
 from datetime import date
@@ -19,9 +19,9 @@ from civicboards.vacancy_tracker import build_vacancy_checklist
 
 
 app = FastAPI(
-    title="CivicBoards",
+    title='Townlight Boards',
     version=__version__,
-    description="Board and commission roster, terms, vacancies, attendance, notices, and records-export support for CivicSuite.",
+    description='Board and commission roster, terms, vacancies, attendance, notices, and records-export support for Townlight.',
 )
 
 _roster_repository: BoardRosterRepository | None = None
@@ -65,13 +65,13 @@ def root() -> dict[str, str]:
         "version": __version__,
         "status": "board administration foundation plus roster persistence",
         "message": (
-            "CivicBoards package, API foundation, sample board registry, term tracking, "
+            "Townlight Boards package, API foundation, sample board registry, term tracking, "
             "vacancy checklist, attendance summary, optional database-backed board roster and attendance "
             "review records, records export checklist, and public UI foundation are online; live agenda "
             "systems, appointment decisions, legal advice, live LLM calls, meeting system write-back, "
             "and board system-of-record integrations are not implemented yet."
         ),
-        "next_step": "Post-v0.1.1 roadmap: CivicClerk agenda handoff, public vacancy pages, and staff review queues",
+        "next_step": "Post-v0.1.1 roadmap: Townlight Meetings agenda handoff, public vacancy pages, and staff review queues",
     }
 
 
@@ -110,7 +110,7 @@ def get_board_registry(board_id: str) -> dict[str, object]:
         raise HTTPException(
             status_code=503,
             detail={
-                "message": "CivicBoards roster persistence is not configured.",
+                "message": "Townlight Boards roster persistence is not configured.",
                 "fix": "Set CIVICBOARDS_ROSTER_DB_URL to retrieve persisted board roster records.",
             },
         )
@@ -168,7 +168,7 @@ def get_attendance_review(attendance_id: str) -> dict[str, object]:
         raise HTTPException(
             status_code=503,
             detail={
-                "message": "CivicBoards roster persistence is not configured.",
+                "message": "Townlight Boards roster persistence is not configured.",
                 "fix": "Set CIVICBOARDS_ROSTER_DB_URL to retrieve persisted attendance review records.",
             },
         )

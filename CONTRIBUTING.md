@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping CivicBoards become useful municipal software.
+Thank you for helping Townlight Boards become useful municipal software.
 
 ## Development Loop
 
@@ -11,7 +11,7 @@ Thank you for helping CivicBoards become useful municipal software.
 
 ## Boundaries
 
-- CivicBoards gives board-support drafts, not official appointment decisions, appointment approvals, executions, legal advice, or system-of-record updates.
+- Townlight Boards gives board-support drafts, not official appointment decisions, appointment approvals, executions, legal advice, or system-of-record updates.
 - Do not present generated term trackings, vacancy flags, attendance summaries, or records exports as decision-ready without staff review.
-- Do not import CivicCore placeholder packages.
+- Do not import Townlight Core placeholder packages.
 - Do not claim planned behavior is shipped.

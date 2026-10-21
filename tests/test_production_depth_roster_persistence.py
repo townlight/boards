@@ -84,7 +84,7 @@ def test_get_board_without_persistence_returns_actionable_503(monkeypatch) -> No
 
     assert response.status_code == 503
     detail = response.json()["detail"]
-    assert detail["message"] == "CivicBoards roster persistence is not configured."
+    assert detail["message"] == "Townlight Boards roster persistence is not configured."
     assert "Set CIVICBOARDS_ROSTER_DB_URL" in detail["fix"]
 
 

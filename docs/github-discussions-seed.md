@@ -1,8 +1,10 @@
 # GitHub Discussions Seed Posts
 
-## Welcome to CivicBoards
+<a id="welcome-to-civicboards"></a>
 
-CivicBoards is the CivicSuite module for board registry, term tracking, vacancy tracking, attendance review, and notice/records export checklists.
+## Welcome to Townlight Boards
+
+Townlight Boards is the Townlight module for board registry, term tracking, vacancy tracking, attendance review, and notice/records export checklists.
 
 ## v0.1.1 Release Discussion
 

@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a CivicBoards defect
+about: Report a Townlight Boards defect
 title: "[Bug]: "
 labels: bug
 assignees: ""
@@ -12,12 +12,12 @@ Describe the issue.
 
 ## Expected behavior
 
-What should CivicBoards have done instead?
+What should Townlight Boards have done instead?
 
 ## Environment
 
-- CivicBoards version:
-- CivicCore version:
+- Townlight Boards version:
+- Townlight Core version:
 - Operating system:
 
 ## Evidence

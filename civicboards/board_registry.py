@@ -1,4 +1,4 @@
-"""Board and commission registry helpers for CivicBoards v0.1.1."""
+"""Board and commission registry helpers for Townlight Boards v0.1.1."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 
 DISCLAIMER = (
-    "CivicBoards supports board and commission administration, but staff remain "
+    "Townlight Boards supports board and commission administration, but staff remain "
     "responsible for appointments, attendance determinations, notices, minutes, "
     "and statutory compliance."
 )

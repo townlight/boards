@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a CivicBoards capability
+about: Suggest a Townlight Boards capability
 title: "[Feature]: "
 labels: enhancement
 assignees: ""
