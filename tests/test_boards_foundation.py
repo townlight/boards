@@ -2,12 +2,12 @@ from datetime import date
 
 from fastapi.testclient import TestClient
 
-from civicboards.attendance_tracker import summarize_attendance
-from civicboards.board_registry import register_board_stub
-from civicboards.main import app
-from civicboards.notice_export import build_board_records_export
-from civicboards.term_tracker import build_term_review_plan
-from civicboards.vacancy_tracker import build_vacancy_checklist
+from townlight_boards.attendance_tracker import summarize_attendance
+from townlight_boards.board_registry import register_board_stub
+from townlight_boards.main import app
+from townlight_boards.notice_export import build_board_records_export
+from townlight_boards.term_tracker import build_term_review_plan
+from townlight_boards.vacancy_tracker import build_vacancy_checklist
 
 
 client = TestClient(app)
@@ -60,7 +60,7 @@ def test_records_export_preserves_board_context() -> None:
 
 def test_board_support_apis_success_shape() -> None:
     registry = client.post(
-        "/api/v1/civicboards/registry",
+        "/api/v1/townlight_boards/registry",
         json={
             "board_id": "pc-001",
             "board_name": "Planning Commission",
@@ -68,19 +68,19 @@ def test_board_support_apis_success_shape() -> None:
         },
     )
     terms = client.post(
-        "/api/v1/civicboards/terms",
+        "/api/v1/townlight_boards/terms",
         json={"member_name": "Jordan Lee", "term_end": "2026-12-31"},
     )
     vacancies = client.post(
-        "/api/v1/civicboards/vacancies",
+        "/api/v1/townlight_boards/vacancies",
         json={"board_name": "Library Board", "vacancy_reason": "resignation"},
     )
     attendance = client.post(
-        "/api/v1/civicboards/attendance",
+        "/api/v1/townlight_boards/attendance",
         json={"member_name": "Avery Patel", "meetings_attended": 2, "meetings_held": 5},
     )
     export = client.post(
-        "/api/v1/civicboards/export",
+        "/api/v1/townlight_boards/export",
         json={"title": "Planning Commission archive", "board_id": "pc-001"},
     )
     assert registry.status_code == 200
@@ -97,12 +97,12 @@ def test_board_support_apis_success_shape() -> None:
 
 
 def test_public_ui_route_is_accessible_and_honest() -> None:
-    response = client.get("/civicboards")
+    response = client.get("/townlight_boards")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
     text = response.text
     assert '<a class="skip-link" href="#main">Skip to main content</a>' in text
     assert '<main id="main" tabindex="-1">' in text
-    assert "v0.1.1 board administration foundation" in text
+    assert "v0.2.0 board administration foundation" in text
     assert "does not appoint members" in text
     assert "system of record" in text

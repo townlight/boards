@@ -1,11 +1,11 @@
-"""Term tracking helpers for Townlight Boards v0.1.1."""
+"""Term tracking helpers for Townlight Boards v0.2.0."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, timedelta
 
-from civicboards.board_registry import DISCLAIMER
+from townlight_boards.board_registry import DISCLAIMER
 
 
 @dataclass(frozen=True)

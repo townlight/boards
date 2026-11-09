@@ -1,4 +1,4 @@
-"""Board and commission registry helpers for Townlight Boards v0.1.1."""
+"""Board and commission registry helpers for Townlight Boards v0.2.0."""
 
 from __future__ import annotations
 

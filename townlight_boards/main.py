@@ -3,19 +3,19 @@
 import os
 from datetime import date
 
-from civiccore import __version__ as CIVICCORE_VERSION
+from townlight_core import __version__ as TOWNLIGHT_CORE_VERSION
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-from civicboards import __version__
-from civicboards.attendance_tracker import summarize_attendance
-from civicboards.board_registry import register_board_stub
-from civicboards.notice_export import build_board_records_export
-from civicboards.persistence import BoardRosterRepository, StoredAttendanceReview
-from civicboards.public_ui import render_public_lookup_page
-from civicboards.term_tracker import build_term_review_plan
-from civicboards.vacancy_tracker import build_vacancy_checklist
+from townlight_boards import __version__
+from townlight_boards.attendance_tracker import summarize_attendance
+from townlight_boards.board_registry import register_board_stub
+from townlight_boards.notice_export import build_board_records_export
+from townlight_boards.persistence import BoardRosterRepository, StoredAttendanceReview
+from townlight_boards.public_ui import render_public_lookup_page
+from townlight_boards.term_tracker import build_term_review_plan
+from townlight_boards.vacancy_tracker import build_vacancy_checklist
 
 
 app = FastAPI(
@@ -61,7 +61,7 @@ def root() -> dict[str, str]:
     """Return current product state without overstating unshipped behavior."""
 
     return {
-        "name": "CivicBoards",
+        "name": "Townlight Boards",
         "version": __version__,
         "status": "board administration foundation plus roster persistence",
         "message": (
@@ -71,7 +71,7 @@ def root() -> dict[str, str]:
             "systems, appointment decisions, legal advice, live LLM calls, meeting system write-back, "
             "and board system-of-record integrations are not implemented yet."
         ),
-        "next_step": "Post-v0.1.1 roadmap: Townlight Meetings agenda handoff, public vacancy pages, and staff review queues",
+        "next_step": "Post-v0.2.0 roadmap: Townlight Meetings agenda handoff, public vacancy pages, and staff review queues",
     }
 
 
@@ -81,20 +81,20 @@ def health() -> dict[str, str]:
 
     return {
         "status": "ok",
-        "service": "civicboards",
+        "service": "townlight_boards",
         "version": __version__,
-        "civiccore_version": CIVICCORE_VERSION,
+        "townlight_core_version": TOWNLIGHT_CORE_VERSION,
     }
 
 
-@app.get("/civicboards", response_class=HTMLResponse)
-def public_civicboards_page() -> str:
+@app.get("/townlight_boards", response_class=HTMLResponse)
+def public_townlight_boards_page() -> str:
     """Return the public sample board administration support UI."""
 
     return render_public_lookup_page()
 
 
-@app.post("/api/v1/civicboards/registry")
+@app.post("/api/v1/townlight_boards/registry")
 def board_registry(request: BoardRegistryRequest) -> dict[str, object]:
     result = _register_board(
         board_id=request.board_id,
@@ -104,14 +104,14 @@ def board_registry(request: BoardRegistryRequest) -> dict[str, object]:
     return result.__dict__
 
 
-@app.get("/api/v1/civicboards/registry/{board_id}")
+@app.get("/api/v1/townlight_boards/registry/{board_id}")
 def get_board_registry(board_id: str) -> dict[str, object]:
     if _roster_database_url() is None:
         raise HTTPException(
             status_code=503,
             detail={
                 "message": "Townlight Boards roster persistence is not configured.",
-                "fix": "Set CIVICBOARDS_ROSTER_DB_URL to retrieve persisted board roster records.",
+                "fix": "Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to retrieve persisted board roster records.",
             },
         )
     stored = _get_roster_repository().get_board(board_id)
@@ -120,13 +120,13 @@ def get_board_registry(board_id: str) -> dict[str, object]:
             status_code=404,
             detail={
                 "message": "Board roster record not found.",
-                "fix": "Use a board_id returned by POST /api/v1/civicboards/registry.",
+                "fix": "Use a board_id returned by POST /api/v1/townlight_boards/registry.",
             },
         )
     return stored.__dict__
 
 
-@app.post("/api/v1/civicboards/terms")
+@app.post("/api/v1/townlight_boards/terms")
 def term_plan(request: TermRequest) -> dict[str, object]:
     return build_term_review_plan(
         member_name=request.member_name,
@@ -134,7 +134,7 @@ def term_plan(request: TermRequest) -> dict[str, object]:
     ).__dict__
 
 
-@app.post("/api/v1/civicboards/vacancies")
+@app.post("/api/v1/townlight_boards/vacancies")
 def vacancy_checklist(request: VacancyRequest) -> dict[str, object]:
     return build_vacancy_checklist(
         board_name=request.board_name,
@@ -142,7 +142,7 @@ def vacancy_checklist(request: VacancyRequest) -> dict[str, object]:
     ).__dict__
 
 
-@app.post("/api/v1/civicboards/attendance")
+@app.post("/api/v1/townlight_boards/attendance")
 def attendance_summary(request: AttendanceRequest) -> dict[str, object]:
     if _roster_database_url() is not None:
         stored = _get_roster_repository().create_attendance_review(
@@ -162,14 +162,14 @@ def attendance_summary(request: AttendanceRequest) -> dict[str, object]:
     return payload
 
 
-@app.get("/api/v1/civicboards/attendance/{attendance_id}")
+@app.get("/api/v1/townlight_boards/attendance/{attendance_id}")
 def get_attendance_review(attendance_id: str) -> dict[str, object]:
     if _roster_database_url() is None:
         raise HTTPException(
             status_code=503,
             detail={
                 "message": "Townlight Boards roster persistence is not configured.",
-                "fix": "Set CIVICBOARDS_ROSTER_DB_URL to retrieve persisted attendance review records.",
+                "fix": "Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to retrieve persisted attendance review records.",
             },
         )
     stored = _get_roster_repository().get_attendance_review(attendance_id)
@@ -178,13 +178,13 @@ def get_attendance_review(attendance_id: str) -> dict[str, object]:
             status_code=404,
             detail={
                 "message": "Attendance review record not found.",
-                "fix": "Use an attendance_id returned by POST /api/v1/civicboards/attendance.",
+                "fix": "Use an attendance_id returned by POST /api/v1/townlight_boards/attendance.",
             },
         )
     return _stored_attendance_response(stored)
 
 
-@app.post("/api/v1/civicboards/export")
+@app.post("/api/v1/townlight_boards/export")
 def records_export(request: RecordsExportRequest) -> dict[str, object]:
     return build_board_records_export(
         board_id=request.board_id,
@@ -194,14 +194,14 @@ def records_export(request: RecordsExportRequest) -> dict[str, object]:
 
 
 def _roster_database_url() -> str | None:
-    return os.environ.get("CIVICBOARDS_ROSTER_DB_URL")
+    return os.environ.get("TOWNLIGHT_BOARDS_ROSTER_DB_URL")
 
 
 def _get_roster_repository() -> BoardRosterRepository:
     global _roster_db_url, _roster_repository
     db_url = _roster_database_url()
     if db_url is None:
-        raise RuntimeError("CIVICBOARDS_ROSTER_DB_URL is not configured.")
+        raise RuntimeError("TOWNLIGHT_BOARDS_ROSTER_DB_URL is not configured.")
     if _roster_repository is None or db_url != _roster_db_url:
         _dispose_roster_repository()
         _roster_db_url = db_url

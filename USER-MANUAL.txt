@@ -4,22 +4,22 @@
 
 Townlight Boards helps city staff keep board and commission rosters, member terms, vacancy workflows, attendance review notes, meeting records, public notice context, and export manifests organized. It can create a sample board registry stub, build term reminders, assemble vacancy checklists, summarize attendance review, and assemble a notice/records export checklist.
 
-Current state: 0.1.1 board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures CIVICBOARDS_ROSTER_DB_URL. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
+Current state: 0.2.0 board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures TOWNLIGHT_BOARDS_ROSTER_DB_URL. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
 
 ## For IT and Technical Staff
 
-Townlight Boards is a FastAPI Python package pinned to civiccore==0.3.0. The current runtime exposes:
+Townlight Boards is a FastAPI Python package pinned to townlight-core==1.3.0.dev2. The current runtime exposes:
 
 - GET /
 - GET /health
-- GET /civicboards
-- POST /api/v1/civicboards/registry
-- GET /api/v1/civicboards/registry/{board_id}
-- POST /api/v1/civicboards/terms
-- POST /api/v1/civicboards/vacancies
-- POST /api/v1/civicboards/attendance
-- GET /api/v1/civicboards/attendance/{attendance_id}
-- POST /api/v1/civicboards/export
+- GET /townlight_boards
+- POST /api/v1/townlight_boards/registry
+- GET /api/v1/townlight_boards/registry/{board_id}
+- POST /api/v1/townlight_boards/terms
+- POST /api/v1/townlight_boards/vacancies
+- POST /api/v1/townlight_boards/attendance
+- GET /api/v1/townlight_boards/attendance/{attendance_id}
+- POST /api/v1/townlight_boards/export
 
 Run:
 
@@ -29,7 +29,7 @@ python -m pytest -q
 bash scripts/verify-release.sh
 
 
-Set CIVICBOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed board roster and attendance review records. If the variable is not set, Townlight Boards keeps deterministic stateless behavior and retrieval endpoints return actionable configuration guidance.
+Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed board roster and attendance review records. If the variable is not set, Townlight Boards keeps deterministic stateless behavior and retrieval endpoints return actionable configuration guidance.
 
 
 ## Architecture
@@ -37,9 +37,15 @@ Set CIVICBOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed board roster and
 mermaid
 flowchart LR
   Staff["Clerk / board liaison / commission staff"] --> Townlight Boards["Townlight Boards"]
-  Townlight Boards --> Townlight Core["Townlight Core v0.3.0"]
+  Townlight Boards --> Townlight Core["Townlight Core 1.3.0.dev2"]
   Townlight Boards -. future handoff .-> Townlight Meetings["Townlight Meetings v0.1.0"]
   Townlight Boards --> Export["Notice and records export checklist"]
 
 
-Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.1.1 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
+Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.2.0 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
+
+In the Windows suite
+
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records.
+Staff operating guide: https://townlight.github.io/manuals/windows-staff-workflows.html#boards
+Download: https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.0.1

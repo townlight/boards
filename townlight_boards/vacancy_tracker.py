@@ -1,10 +1,10 @@
-"""Vacancy tracking helpers for Townlight Boards v0.1.1."""
+"""Vacancy tracking helpers for Townlight Boards v0.2.0."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from civicboards.board_registry import DISCLAIMER
+from townlight_boards.board_registry import DISCLAIMER
 
 
 @dataclass(frozen=True)

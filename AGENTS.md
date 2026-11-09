@@ -1,4 +1,4 @@
-<a id="civicboards-agent-board"></a>
+<a id="townlight_boards-agent-board"></a>
 
 # Townlight Boards Agent Board
 
@@ -11,10 +11,10 @@
 ## Hard Boundaries
 
 - Townlight Boards never appoints members, removes members, publishes official notices, provides legal advice, writes back to meeting systems, or updates a board system of record.
-- Townlight Boards v0.1.1 must not call live LLMs or live agenda systems.
+- Townlight Boards v0.2.0 must not call live LLMs or live agenda systems.
 - Term tracking, vacancy tracking, attendance review, and records exports must be marked staff-review-required where applicable.
 - Townlight Boards depends on Townlight Core; Townlight Core must never depend on Townlight Boards.
-- Townlight Boards may reference Townlight Meetings meeting concepts only through released APIs or deterministic sample data in v0.1.1.
+- Townlight Boards may reference Townlight Meetings meeting concepts only through released APIs or deterministic sample data in v0.2.0.
 
 ## Verification
 
