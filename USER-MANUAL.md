@@ -6,6 +6,10 @@
 
 Townlight Boards helps city staff keep board and commission rosters, member terms, vacancy workflows, attendance review notes, meeting records, public notice context, and export manifests organized. It can create a sample board registry stub, build term reminders, assemble vacancy checklists, summarize attendance review, and assemble a notice/records export checklist.
 
+## In the Windows suite
+
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the [signed Townlight Windows beta 1.8.0.1](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.0.1) and select the full profile. See the [staff operating guide](https://townlight.github.io/manuals/windows-staff-workflows.html#boards). The package examples below describe the standalone development interface.
+
 Current state: `0.2.0` board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures `TOWNLIGHT_BOARDS_ROSTER_DB_URL`. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
 
 ## For IT and Technical Staff

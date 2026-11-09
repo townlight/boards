@@ -43,3 +43,9 @@ flowchart LR
 
 
 Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.2.0 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
+
+In the Windows suite
+
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records.
+Staff operating guide: https://townlight.github.io/manuals/windows-staff-workflows.html#boards
+Download: https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.0.1
