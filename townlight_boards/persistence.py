@@ -7,8 +7,8 @@ from uuid import uuid4
 import sqlalchemy as sa
 from sqlalchemy import Engine, create_engine
 
-from civicboards.attendance_tracker import summarize_attendance
-from civicboards.board_registry import BoardRoster, register_board_stub
+from townlight_boards.attendance_tracker import summarize_attendance
+from townlight_boards.board_registry import BoardRoster, register_board_stub
 
 
 metadata = sa.MetaData()
@@ -23,7 +23,7 @@ board_roster_records = sa.Table(
     sa.Column("disclaimer", sa.Text(), nullable=False),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
     sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
-    schema="civicboards",
+    schema="townlight_boards",
 )
 
 attendance_review_records = sa.Table(
@@ -38,7 +38,7 @@ attendance_review_records = sa.Table(
     sa.Column("staff_review_required", sa.Boolean(), nullable=False),
     sa.Column("disclaimer", sa.Text(), nullable=False),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-    schema="civicboards",
+    schema="townlight_boards",
 )
 
 
@@ -61,11 +61,14 @@ class BoardRosterRepository:
     def __init__(self, *, db_url: str | None = None, engine: Engine | None = None, seed_defaults: bool = True) -> None:
         base_engine = engine or create_engine(db_url or "sqlite+pysqlite:///:memory:", future=True)
         if base_engine.dialect.name == "sqlite":
-            self.engine = base_engine.execution_options(schema_translate_map={"civicboards": None})
+            self.engine = base_engine.execution_options(schema_translate_map={"townlight_boards": None})
         else:
             self.engine = base_engine
             with self.engine.begin() as connection:
-                connection.execute(sa.text("CREATE SCHEMA IF NOT EXISTS civicboards"))
+                schemas = set(sa.inspect(connection).get_schema_names())
+                if "civicboards" in schemas:
+                    raise RuntimeError("Migrate the legacy PostgreSQL schema before opening townlight_boards.")
+                connection.execute(sa.text("CREATE SCHEMA IF NOT EXISTS townlight_boards"))
         metadata.create_all(self.engine)
         if seed_defaults:
             self.seed_sample_boards()

@@ -1,4 +1,4 @@
-"""Static public UI shell for Townlight Boards v0.1.1."""
+"""Static public UI shell for Townlight Boards v0.2.0."""
 
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def render_public_lookup_page() -> str:
   <p class="eyebrow">Townlight / Townlight Boards public sample</p>
   <h1>Board rosters, terms, and vacancies without spreadsheet drift.</h1>
   <p class="lede">Townlight Boards demonstrates board and commission administration support: roster stubs, term reminders, vacancy checklists, attendance review, and public-records-aware exports without making appointments or legal determinations.</p>
-  <p><span class="badge">v0.1.1 board administration foundation</span></p>
+  <p><span class="badge">v0.2.0 board administration foundation</span></p>
 </header>
 <main id="main" tabindex="-1">
   <section class="grid" aria-labelledby="lookup-title">

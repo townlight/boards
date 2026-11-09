@@ -4,15 +4,15 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from civicboards.main import app, _dispose_roster_repository
-from civicboards.persistence import BoardRosterRepository
+from townlight_boards.main import app, _dispose_roster_repository
+from townlight_boards.persistence import BoardRosterRepository
 
 
 client = TestClient(app)
 
 
 def test_repository_persists_board_roster_and_attendance_review(tmp_path: Path) -> None:
-    db_path = tmp_path / "civicboards.db"
+    db_path = tmp_path / "townlight_boards.db"
     db_url = f"sqlite+pysqlite:///{db_path.as_posix()}"
 
     repository = BoardRosterRepository(db_url=db_url)
@@ -43,28 +43,28 @@ def test_repository_persists_board_roster_and_attendance_review(tmp_path: Path) 
 
 
 def test_roster_persistence_api_round_trip(monkeypatch, tmp_path: Path) -> None:
-    db_path = tmp_path / "civicboards-api.db"
-    monkeypatch.setenv("CIVICBOARDS_ROSTER_DB_URL", f"sqlite+pysqlite:///{db_path.as_posix()}")
+    db_path = tmp_path / "townlight_boards-api.db"
+    monkeypatch.setenv("TOWNLIGHT_BOARDS_ROSTER_DB_URL", f"sqlite+pysqlite:///{db_path.as_posix()}")
     _dispose_roster_repository()
 
     created_board = client.post(
-        "/api/v1/civicboards/registry",
+        "/api/v1/townlight_boards/registry",
         json={
             "board_id": "pc-001",
             "board_name": "Planning Commission",
             "liaison": "clerk@example.gov",
         },
     )
-    fetched_board = client.get("/api/v1/civicboards/registry/pc-001")
+    fetched_board = client.get("/api/v1/townlight_boards/registry/pc-001")
     created_attendance = client.post(
-        "/api/v1/civicboards/attendance",
+        "/api/v1/townlight_boards/attendance",
         json={"member_name": "Avery Patel", "meetings_attended": 2, "meetings_held": 5},
     )
     attendance_id = created_attendance.json()["attendance_id"]
-    fetched_attendance = client.get(f"/api/v1/civicboards/attendance/{attendance_id}")
+    fetched_attendance = client.get(f"/api/v1/townlight_boards/attendance/{attendance_id}")
 
     _dispose_roster_repository()
-    monkeypatch.delenv("CIVICBOARDS_ROSTER_DB_URL")
+    monkeypatch.delenv("TOWNLIGHT_BOARDS_ROSTER_DB_URL")
 
     assert created_board.status_code == 200
     assert fetched_board.status_code == 200
@@ -77,29 +77,29 @@ def test_roster_persistence_api_round_trip(monkeypatch, tmp_path: Path) -> None:
 
 
 def test_get_board_without_persistence_returns_actionable_503(monkeypatch) -> None:
-    monkeypatch.delenv("CIVICBOARDS_ROSTER_DB_URL", raising=False)
+    monkeypatch.delenv("TOWNLIGHT_BOARDS_ROSTER_DB_URL", raising=False)
     _dispose_roster_repository()
 
-    response = client.get("/api/v1/civicboards/registry/pc-001")
+    response = client.get("/api/v1/townlight_boards/registry/pc-001")
 
     assert response.status_code == 503
     detail = response.json()["detail"]
     assert detail["message"] == "Townlight Boards roster persistence is not configured."
-    assert "Set CIVICBOARDS_ROSTER_DB_URL" in detail["fix"]
+    assert "Set TOWNLIGHT_BOARDS_ROSTER_DB_URL" in detail["fix"]
 
 
 def test_get_attendance_missing_id_returns_actionable_404(monkeypatch, tmp_path: Path) -> None:
-    db_path = tmp_path / "civicboards-missing.db"
-    monkeypatch.setenv("CIVICBOARDS_ROSTER_DB_URL", f"sqlite+pysqlite:///{db_path.as_posix()}")
+    db_path = tmp_path / "townlight_boards-missing.db"
+    monkeypatch.setenv("TOWNLIGHT_BOARDS_ROSTER_DB_URL", f"sqlite+pysqlite:///{db_path.as_posix()}")
     _dispose_roster_repository()
 
-    response = client.get("/api/v1/civicboards/attendance/missing")
+    response = client.get("/api/v1/townlight_boards/attendance/missing")
 
     _dispose_roster_repository()
-    monkeypatch.delenv("CIVICBOARDS_ROSTER_DB_URL")
+    monkeypatch.delenv("TOWNLIGHT_BOARDS_ROSTER_DB_URL")
 
     assert response.status_code == 404
     detail = response.json()["detail"]
     assert detail["message"] == "Attendance review record not found."
-    assert "POST /api/v1/civicboards/attendance" in detail["fix"]
+    assert "POST /api/v1/townlight_boards/attendance" in detail["fix"]
     db_path.unlink()
