@@ -8,7 +8,7 @@ from townlight_boards.main import app, _dispose_roster_repository
 from townlight_boards.persistence import BoardRosterRepository
 
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Townlight-Boards-Staff-Key": "test-only-key", "X-Townlight-Boards-Role": "staff"})
 
 
 def test_repository_persists_board_roster_and_attendance_review(tmp_path: Path) -> None:

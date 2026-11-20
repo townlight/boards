@@ -21,8 +21,8 @@ class BoardRoster:
     disclaimer: str = DISCLAIMER
 
 
-def register_board_stub(*, board_id: str, board_name: str, liaison: str) -> BoardRoster:
-    """Return a deterministic board registry stub for staff review."""
+def build_board_registration(*, board_id: str, board_name: str, liaison: str) -> BoardRoster:
+    """Build normalized board registration fields and staff-review notes."""
 
     notes = (
         "Confirm enabling authority, appointment body, term length, quorum rule, and vacancy rule.",
@@ -35,3 +35,6 @@ def register_board_stub(*, board_id: str, board_name: str, liaison: str) -> Boar
         liaison=liaison.strip() or "Unassigned liaison",
         roster_notes=notes,
     )
+
+# Compatibility export for existing pinned consumers; no change to persistence.
+register_board_stub = build_board_registration

@@ -8,7 +8,7 @@ import sqlalchemy as sa
 from sqlalchemy import Engine, create_engine
 
 from townlight_boards.attendance_tracker import summarize_attendance
-from townlight_boards.board_registry import BoardRoster, register_board_stub
+from townlight_boards.board_registry import BoardRoster, build_board_registration
 
 
 metadata = sa.MetaData()
@@ -94,7 +94,7 @@ class BoardRosterRepository:
             )
 
     def register_board(self, *, board_id: str, board_name: str, liaison: str) -> BoardRoster:
-        roster = register_board_stub(board_id=board_id, board_name=board_name, liaison=liaison)
+        roster = build_board_registration(board_id=board_id, board_name=board_name, liaison=liaison)
         now = datetime.now(UTC)
         with self.engine.begin() as connection:
             exists = connection.execute(

@@ -4,7 +4,7 @@ import townlight_boards
 from townlight_boards.main import app
 
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Townlight-Boards-Staff-Key": "test-only-key", "X-Townlight-Boards-Role": "staff"})
 
 
 def test_package_version() -> None:
