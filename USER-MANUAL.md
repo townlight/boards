@@ -21,7 +21,7 @@ Townlight Boards helps city staff keep board and commission rosters, member term
 
 Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the [signed Townlight Windows beta 1.8.1.1](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.1.1) and select the full profile. See the [staff operating guide](https://townlight.github.io/manuals/windows-staff-workflows.html#boards). The package examples below describe the standalone development interface.
 
-Current state: `0.2.0` board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures `TOWNLIGHT_BOARDS_ROSTER_DB_URL`. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
+Current state: `0.2.1` board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures `TOWNLIGHT_BOARDS_ROSTER_DB_URL`. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
 
 ## For IT and Technical Staff
 
@@ -58,7 +58,7 @@ flowchart LR
   Townlight Boards --> Export["Notice and records export checklist"]
 ```
 
-Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.2.0 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
+Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.2.1 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
 
 ## Upgrading standalone PostgreSQL data
 
