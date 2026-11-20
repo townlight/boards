@@ -19,7 +19,7 @@ Townlight Boards is the Townlight module for board and commission roster support
 
 Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the [signed Townlight Windows beta 1.8.1.1](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.1.1) and select the full profile. See the [staff operating guide](https://townlight.github.io/manuals/windows-staff-workflows.html#boards). The package examples below describe the standalone development interface.
 
-Current state: **v0.2.0 board administration foundation plus roster persistence release**. This repo ships a FastAPI package, health/root endpoints, documentation gates, deterministic sample board registry, term review plans, vacancy checklists, attendance summaries, optional database-backed board roster and attendance review records, notice/records export checklist, and accessible public sample UI at `/townlight_boards`, aligned to `townlight-core==1.3.0.dev2`. It does **not** ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
+Current state: **v0.2.1 board administration foundation plus roster persistence release**. This repo ships a FastAPI package, health/root endpoints, documentation gates, deterministic sample board registry, term review plans, vacancy checklists, attendance summaries, optional database-backed board roster and attendance review records, notice/records export checklist, and accessible public sample UI at `/townlight_boards`, aligned to `townlight-core==1.3.0.dev2`. It does **not** ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
 
 <a id="what-townlight_boards-does"></a>
 
@@ -40,7 +40,7 @@ Current state: **v0.2.0 board administration foundation plus roster persistence 
 - It does not appoint, remove, or replace members.
 - It does not publish official notices.
 - It does not provide legal advice.
-- It does not call live LLMs in v0.2.0.
+- It does not call live LLMs in v0.2.1.
 - It does not replace a board system of record.
 
 ## API Surface
