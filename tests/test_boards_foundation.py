@@ -3,18 +3,18 @@ from datetime import date
 from fastapi.testclient import TestClient
 
 from townlight_boards.attendance_tracker import summarize_attendance
-from townlight_boards.board_registry import register_board_stub
+from townlight_boards.board_registry import build_board_registration
 from townlight_boards.main import app
 from townlight_boards.notice_export import build_board_records_export
 from townlight_boards.term_tracker import build_term_review_plan
 from townlight_boards.vacancy_tracker import build_vacancy_checklist
 
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Townlight-Boards-Staff-Key": "test-only-key", "X-Townlight-Boards-Role": "staff"})
 
 
 def test_board_registry_flags_authority_and_boundary() -> None:
-    result = register_board_stub(
+    result = build_board_registration(
         board_id="pc-001",
         board_name="Planning Commission",
         liaison="clerk@example.gov",

@@ -1,23 +1,26 @@
-# Townlight Boards User Manual
+Townlight Boards User Manual
 
-## Shared meeting imports · Windows 1.8.1.1
+Shared meeting imports · Windows 1.8.1.1
 
 Windows 1.8.1.1 adds shared meeting imports for 31 source families, with 34 supported source/format pairs. Installed Windows Sandbox checks exercised preview, save and durable readback using public captures and fixtures, plus the documented Townlight handoffs. These checks do not establish automatic discovery on every live portal or a complete retest of every module.
 
-[All 31 sources, formats and handoffs](https://townlight.github.io/manuals/meeting-imports.html) · [Installed acceptance](https://github.com/townlight/townlight/releases/download/townlight-windows-v1.8.1.1/ACCEPTANCE-Windows-1.8.1.1.md).
+All 31 sources, formats and handoffs · Installed acceptance.
 
-Windows 1.8.1.1 has fresh-install acceptance. An in-place upgrade to 1.8.1.1 was not exercised. The previous Windows 1.8.0.1 release tested upgrade from 1.7.2.1; that result applies to 1.8.0.1. Before an existing-city evaluation, back up city data and settings, close Townlight, keep the existing %LOCALAPPDATA%\CivicSuite profile, and use the same Windows account. Keep the prior installer and a restore path. Station continues to use its separately configured service.
+Windows 1.8.1.1 has fresh-install acceptance. An in-place upgrade to 1.8.1.1 was not exercised. The previous Windows 1.8.0.1 release tested upgrade from 1.7.2.1; that result applies to 1.8.0.1. Before an existing-city evaluation, back up city data and settings, close Townlight, keep the existing %LOCALAPPDATA%profile, and use the same Windows account. Keep the prior installer and a restore path. Station continues to use its separately configured service.
 
 The accepted MSI contains Townlight Runtime 0.3.1 and Meetings 1.0.6 distributions. Its health version strings still report Runtime 0.3.0 and Meetings 1.0.5. Default-branch source corrects those display strings; the signed MSI and its exact build source remain unchanged.
 
-
-## For Non-Technical Users
+For Non-Technical Users
 
 Townlight Boards helps city staff keep board and commission rosters, member terms, vacancy workflows, attendance review notes, meeting records, public notice context, and export manifests organized. It can create a sample board registry stub, build term reminders, assemble vacancy checklists, summarize attendance review, and assemble a notice/records export checklist.
 
+In the Windows suite
+
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the signed Townlight Windows beta 1.8.1.1 and select the full profile. See the staff operating guide. The package examples below describe the standalone development interface.
+
 Current state: 0.2.0 board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures TOWNLIGHT_BOARDS_ROSTER_DB_URL. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
 
-## For IT and Technical Staff
+For IT and Technical Staff
 
 Townlight Boards is a FastAPI Python package pinned to townlight-core==1.3.0.dev2. The current runtime exposes:
 
@@ -34,29 +37,32 @@ Townlight Boards is a FastAPI Python package pinned to townlight-core==1.3.0.dev
 
 Run:
 
-bash
-python -m pip install -e ".[dev]"
-python -m pytest -q
-bash scripts/verify-release.sh
-
+    python -m pip install -e ".[dev]"
+    python -m pytest -q
+    bash scripts/verify-release.sh
 
 Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed board roster and attendance review records. If the variable is not set, Townlight Boards keeps deterministic stateless behavior and retrieval endpoints return actionable configuration guidance.
 
+Architecture
 
-## Architecture
-
-mermaid
-flowchart LR
-  Staff["Clerk / board liaison / commission staff"] --> Townlight Boards["Townlight Boards"]
-  Townlight Boards --> Townlight Core["Townlight Core 1.3.0.dev2"]
-  Townlight Boards -. future handoff .-> Townlight Meetings["Townlight Meetings v0.1.0"]
-  Townlight Boards --> Export["Notice and records export checklist"]
-
+    flowchart LR
+      Staff["Clerk / board liaison / commission staff"] --> Townlight Boards["Townlight Boards"]
+      Townlight Boards --> CivicCore["Townlight Core 1.3.0.dev2"]
+      Townlight Boards -. future handoff .-> CivicClerk["CivicClerk v0.1.0"]
+      Townlight Boards --> Export["Notice and records export checklist"]
 
 Townlight Boards depends on Townlight Core. Townlight Core does not depend on Townlight Boards. Townlight Boards v0.2.0 uses deterministic sample board and commission data plus optional local roster persistence; live agenda systems, appointment decisions, legal advice, official notice publication, meeting system write-back, and production board-system integrations are future work.
 
-In the Windows suite
+Upgrading standalone PostgreSQL data
 
-Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records.
-Staff operating guide: https://townlight.github.io/manuals/windows-staff-workflows.html#boards
-Download: https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.8.1.1
+Stop the old service and back up its PostgreSQL database. In the same database, verify that the old schema exists and the new schema does not. As the schema owner, run the following in a transaction, then start the upgraded service and check that existing records are present. The operation keeps the tables and data in the same database. SQLite files require no schema rename.
+
+    BEGIN;
+    ALTER SCHEMA civicboards RENAME TO townlight_boards;
+    COMMIT;
+
+Standalone staff API authentication — unreleased source correction
+
+The standalone /api/v1/townlight_boards/ endpoints require X-Townlight-Boards-Role: staff and X-Townlight-Boards-Staff-Key: <configured secret>. Set TOWNLIGHT_BOARDS_STAFF_API_KEY in the service environment; never place the secret in URLs or public examples. Missing configuration returns 503; missing, invalid or non-staff credentials return 403. Health and the deterministic sample page remain public. This reuses Core’s staff-key contract and is not individual staff-account administration.
+
+The installed Windows suite uses its existing named staff sessions and role checks through municipal_staff.py, rather than this standalone API. This source correction is not present in the unchanged Windows 1.8.1.1 MSI.

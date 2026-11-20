@@ -73,3 +73,9 @@ BEGIN;
 ALTER SCHEMA civicboards RENAME TO townlight_boards;
 COMMIT;
 ```
+
+## Standalone staff API authentication — unreleased source correction
+
+The standalone `/api/v1/townlight_boards/` endpoints require `X-Townlight-Boards-Role: staff` and `X-Townlight-Boards-Staff-Key: <configured secret>`. Set `TOWNLIGHT_BOARDS_STAFF_API_KEY` in the service environment; never place the secret in URLs or public examples. Missing configuration returns 503; missing, invalid or non-staff credentials return 403. Health and the deterministic sample page remain public. This reuses Core's staff-key contract and is not individual staff-account administration.
+
+The installed Windows suite uses its existing named staff sessions and role checks through `municipal_staff.py`, rather than this standalone API. This source correction is not present in the unchanged Windows 1.8.1.1 MSI.

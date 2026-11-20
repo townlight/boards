@@ -4,13 +4,14 @@ import os
 from datetime import date
 
 from townlight_core import __version__ as TOWNLIGHT_CORE_VERSION
-from fastapi import FastAPI, HTTPException
+from townlight_core.auth import staff_key_gate
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from townlight_boards import __version__
 from townlight_boards.attendance_tracker import summarize_attendance
-from townlight_boards.board_registry import register_board_stub
+from townlight_boards.board_registry import build_board_registration
 from townlight_boards.notice_export import build_board_records_export
 from townlight_boards.persistence import BoardRosterRepository, StoredAttendanceReview
 from townlight_boards.public_ui import render_public_lookup_page
@@ -23,6 +24,8 @@ app = FastAPI(
     version=__version__,
     description='Board and commission roster, terms, vacancies, attendance, notices, and records-export support for Townlight.',
 )
+
+_require_staff_key = staff_key_gate("TOWNLIGHT_BOARDS_STAFF_API_KEY", "X-Townlight-Boards-Staff-Key")
 
 _roster_repository: BoardRosterRepository | None = None
 _roster_db_url: str | None = None
@@ -94,7 +97,7 @@ def public_townlight_boards_page() -> str:
     return render_public_lookup_page()
 
 
-@app.post("/api/v1/townlight_boards/registry")
+@app.post("/api/v1/townlight_boards/registry", dependencies=[Depends(_require_staff_key)])
 def board_registry(request: BoardRegistryRequest) -> dict[str, object]:
     result = _register_board(
         board_id=request.board_id,
@@ -104,7 +107,7 @@ def board_registry(request: BoardRegistryRequest) -> dict[str, object]:
     return result.__dict__
 
 
-@app.get("/api/v1/townlight_boards/registry/{board_id}")
+@app.get("/api/v1/townlight_boards/registry/{board_id}", dependencies=[Depends(_require_staff_key)])
 def get_board_registry(board_id: str) -> dict[str, object]:
     if _roster_database_url() is None:
         raise HTTPException(
@@ -126,7 +129,7 @@ def get_board_registry(board_id: str) -> dict[str, object]:
     return stored.__dict__
 
 
-@app.post("/api/v1/townlight_boards/terms")
+@app.post("/api/v1/townlight_boards/terms", dependencies=[Depends(_require_staff_key)])
 def term_plan(request: TermRequest) -> dict[str, object]:
     return build_term_review_plan(
         member_name=request.member_name,
@@ -134,7 +137,7 @@ def term_plan(request: TermRequest) -> dict[str, object]:
     ).__dict__
 
 
-@app.post("/api/v1/townlight_boards/vacancies")
+@app.post("/api/v1/townlight_boards/vacancies", dependencies=[Depends(_require_staff_key)])
 def vacancy_checklist(request: VacancyRequest) -> dict[str, object]:
     return build_vacancy_checklist(
         board_name=request.board_name,
@@ -142,7 +145,7 @@ def vacancy_checklist(request: VacancyRequest) -> dict[str, object]:
     ).__dict__
 
 
-@app.post("/api/v1/townlight_boards/attendance")
+@app.post("/api/v1/townlight_boards/attendance", dependencies=[Depends(_require_staff_key)])
 def attendance_summary(request: AttendanceRequest) -> dict[str, object]:
     if _roster_database_url() is not None:
         stored = _get_roster_repository().create_attendance_review(
@@ -162,7 +165,7 @@ def attendance_summary(request: AttendanceRequest) -> dict[str, object]:
     return payload
 
 
-@app.get("/api/v1/townlight_boards/attendance/{attendance_id}")
+@app.get("/api/v1/townlight_boards/attendance/{attendance_id}", dependencies=[Depends(_require_staff_key)])
 def get_attendance_review(attendance_id: str) -> dict[str, object]:
     if _roster_database_url() is None:
         raise HTTPException(
@@ -184,7 +187,7 @@ def get_attendance_review(attendance_id: str) -> dict[str, object]:
     return _stored_attendance_response(stored)
 
 
-@app.post("/api/v1/townlight_boards/export")
+@app.post("/api/v1/townlight_boards/export", dependencies=[Depends(_require_staff_key)])
 def records_export(request: RecordsExportRequest) -> dict[str, object]:
     return build_board_records_export(
         board_id=request.board_id,
@@ -218,7 +221,7 @@ def _dispose_roster_repository() -> None:
 
 def _register_board(*, board_id: str, board_name: str, liaison: str):
     if _roster_database_url() is None:
-        return register_board_stub(
+        return build_board_registration(
             board_id=board_id,
             board_name=board_name,
             liaison=liaison,
