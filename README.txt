@@ -1,11 +1,12 @@
-Windows 1.9.1.1 Station recorder release
+Windows 1.9.3.2 current release
 
-Windows 1.9.1.1 improves the clerk workflows for Records, Meetings, and
-Code, adds Open Hall icons, and fixes the ten-second Station preview.
+Townlight for Windows 1.9.3.2 is the current signed public beta. See the release notes and acceptance record.
 
-Windows 1.9.1.1 is a signed public beta. See the acceptance summary for
-the verified workflows and artifact identities. Set up Station during
-Townlight first run. Read the acceptance summary before upgrading.
+For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.9.3.2 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.1; earlier paths have separate prior evidence.
+
+Windows 1.9.1.1 historical Station recorder release
+
+Windows 1.9.1.1 improves the clerk workflows for Records, Meetings, and Code, adds Open Hall icons, and fixes the ten-second Station preview.
 
 Release and downloads · Acceptance and limits.
 
@@ -13,45 +14,19 @@ Townlight Boards
 
 Shared meeting imports · Windows 1.8.1.1
 
-Windows 1.8.1.1 adds shared meeting imports for 31 source families, with
-34 supported source/format pairs. Installed Windows Sandbox checks
-exercised preview, save and durable readback using public captures and
-fixtures, plus the documented Townlight handoffs. These checks do not
-establish automatic discovery on every live portal or a complete retest
-of every module.
+Windows 1.8.1.1 adds shared meeting imports for 31 source families, with 34 supported source/format pairs. Installed Windows Sandbox checks exercised preview, save and durable readback using public captures and fixtures, plus the documented Townlight handoffs. These checks do not establish automatic discovery on every live portal or a complete retest of every module.
 
 All 31 sources, formats and handoffs · Installed acceptance.
 
-Windows 1.9.1.1 is a signed public beta. See the acceptance summary for
-the verified workflows and artifact identities. Set up Station during
-Townlight first run. Read the acceptance summary before upgrading.
+Windows 1.9.1.1 contains Station 0.4.4, Records 1.8.0.dev4, Townlight Runtime 0.3.3 and Meetings 1.0.6. The release acceptance summary identifies the verified workflows and the builds that produced the evidence.
 
-Windows 1.9.1.1 contains Station 0.4.4, Records 1.8.0.dev4, Townlight
-Runtime 0.3.3 and Meetings 1.0.6. The release acceptance summary
-identifies the verified workflows and the builds that produced the
-evidence.
-
-Townlight Boards is the Townlight module for board and commission roster
-support, term tracking, vacancy tracking, attendance review, and
-notice/records export checklists.
+Townlight Boards is the Townlight module for board and commission roster support, term tracking, vacancy tracking, attendance review, and notice/records export checklists.
 
 In the Windows suite
 
-Maintain board rosters, vacancies, terms, and attendance linked to
-existing Meetings records. Install the signed Townlight Windows beta
-1.8.1.1 and select the full profile. See the staff operating guide. The
-package examples below describe the standalone development interface.
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the signed Townlight Windows beta 1.9.3.2 and select the full profile. See the staff operating guide. The package examples below describe the standalone development interface.
 
-Current state: v0.2.1 board administration foundation plus roster
-persistence release. This repo ships a FastAPI package, health/root
-endpoints, documentation gates, deterministic sample board registry,
-term review plans, vacancy checklists, attendance summaries, optional
-database-backed board roster and attendance review records,
-notice/records export checklist, and accessible public sample UI at
-/townlight_boards, aligned to townlight-core==1.3.0.dev2. It does not
-ship live agenda systems, appointment decisions, legal advice, live LLM
-calls, official notice publication, meeting system write-back, or board
-system-of-record integrations.
+Current state: v0.2.1 board administration foundation plus roster persistence release. This repo ships a FastAPI package, health/root endpoints, documentation gates, deterministic sample board registry, term review plans, vacancy checklists, attendance summaries, optional database-backed board roster and attendance review records, notice/records export checklist, and accessible public sample UI at /townlight_boards, aligned to townlight-core==1.3.0.dev2. It does not ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
 
 What Townlight Boards Does
 
@@ -59,8 +34,7 @@ What Townlight Boards Does
 - Build term-end reminder plans.
 - Assemble vacancy checklists for staff review.
 - Summarize attendance without removing or replacing members.
-- Persist board roster and attendance review records when
-  TOWNLIGHT_BOARDS_ROSTER_DB_URL is configured.
+- Persist board roster and attendance review records when TOWNLIGHT_BOARDS_ROSTER_DB_URL is configured.
 - Produce notice and records export checklists.
 - Demonstrate a public board-support UI at /townlight_boards.
 
@@ -77,30 +51,21 @@ API Surface
 - GET / returns the shipped/planned boundary.
 - GET /health returns package and Townlight Core versions.
 - GET /townlight_boards returns the accessible public sample UI.
-- POST /api/v1/townlight_boards/registry returns a sample board registry
-  stub.
-- GET /api/v1/townlight_boards/registry/{board_id} retrieves a persisted
-  board roster record when TOWNLIGHT_BOARDS_ROSTER_DB_URL is configured.
+- POST /api/v1/townlight_boards/registry returns a sample board registry stub.
+- GET /api/v1/townlight_boards/registry/{board_id} retrieves a persisted board roster record when TOWNLIGHT_BOARDS_ROSTER_DB_URL is configured.
 - POST /api/v1/townlight_boards/terms returns term-end reminders.
 - POST /api/v1/townlight_boards/vacancies returns a vacancy checklist.
-- POST /api/v1/townlight_boards/attendance returns attendance review
-  flags and an attendance_id when persistence is configured.
-- GET /api/v1/townlight_boards/attendance/{attendance_id} retrieves a
-  persisted attendance review when TOWNLIGHT_BOARDS_ROSTER_DB_URL is
-  configured.
-- POST /api/v1/townlight_boards/export returns a notice and records
-  export checklist.
+- POST /api/v1/townlight_boards/attendance returns attendance review flags and an attendance_id when persistence is configured.
+- GET /api/v1/townlight_boards/attendance/{attendance_id} retrieves a persisted attendance review when TOWNLIGHT_BOARDS_ROSTER_DB_URL is configured.
+- POST /api/v1/townlight_boards/export returns a notice and records export checklist.
 
 Optional Persistence
 
-Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed
-board roster and attendance review records:
+Set TOWNLIGHT_BOARDS_ROSTER_DB_URL to enable local SQLAlchemy-backed board roster and attendance review records:
 
     export TOWNLIGHT_BOARDS_ROSTER_DB_URL="sqlite+pysqlite:///./townlight_boards.db"
 
-Without that variable, Townlight Boards remains deterministic and
-stateless. Retrieval endpoints return actionable 503 responses that name
-the required configuration.
+Without that variable, Townlight Boards remains deterministic and stateless. Retrieval endpoints return actionable 503 responses that name the required configuration.
 
 Local Development
 
@@ -110,22 +75,10 @@ Local Development
 
 License
 
-Code: AGPL-3.0-only, with the TownLight Public Institution Exception for
-qualifying deployments. See LICENSE and LICENSE-EXCEPTION.md.
-Documentation is CC BY 4.0.
+Code: AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying deployments. See LICENSE and LICENSE-EXCEPTION.md. Documentation is CC BY 4.0.
 
 Standalone staff API authentication — unreleased source correction
 
-The standalone /api/v1/townlight_boards/ endpoints require
-X-Townlight-Boards-Role: staff and
-X-Townlight-Boards-Staff-Key: <configured secret>. Set
-TOWNLIGHT_BOARDS_STAFF_API_KEY in the service environment; never place
-the secret in URLs or public examples. Missing configuration returns
-503; missing, invalid or non-staff credentials return 403. Health and
-the deterministic sample page remain public. This reuses Core’s
-staff-key contract and is not individual staff-account administration.
+The standalone /api/v1/townlight_boards/ endpoints require X-Townlight-Boards-Role: staff and X-Townlight-Boards-Staff-Key: <configured secret>. Set TOWNLIGHT_BOARDS_STAFF_API_KEY in the service environment; never place the secret in URLs or public examples. Missing configuration returns 503; missing, invalid or non-staff credentials return 403. Health and the deterministic sample page remain public. This reuses Core’s staff-key contract and is not individual staff-account administration.
 
-The installed Windows suite uses its existing named staff sessions and
-role checks through municipal_staff.py, rather than this standalone API.
-This source correction is not present in the unchanged Windows 1.8.1.1
-MSI.
+The installed Windows suite uses its existing named staff sessions and role checks through municipal_staff.py, rather than this standalone API. This source correction is not present in the unchanged Windows 1.8.1.1 MSI.
