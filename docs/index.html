@@ -1,28 +1,106 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Townlight Boards - board and commission support for Townlight</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:"Aptos","Segoe UI",sans-serif;color:#17202a;background:linear-gradient(135deg,#fff8ed,#eef5f8)}main,header,footer{width:min(1080px,calc(100% - 32px));margin:auto}header{padding:56px 0 24px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8a4f25;font-weight:800}h1{font:700 clamp(2.5rem,7vw,5.5rem)/.95 Georgia,serif;margin:.1em 0}.lede{font-size:1.25rem;line-height:1.6;max-width:820px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:rgba(255,255,255,.9);border:1px solid #dcc3a5;border-radius:24px;padding:24px;box-shadow:0 18px 36px #26323b18}.badge{display:inline-block;background:#7a5532;color:white;padding:.5rem .8rem;border-radius:999px;font-weight:900}a{color:#244f73}:focus-visible{outline:4px solid #d8ad48;outline-offset:3px}@media(max-width:600px){main,header,footer{margin:0;max-width:390px;width:100%;padding-left:24px;padding-right:24px}header{padding-top:34px}h1{font-size:clamp(34px,11vw,46px)}.lede{font-size:19px}.grid{grid-template-columns:1fr}.card{padding:22px;border-radius:20px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Townlight Boards &amp; Commissions</title>
+  <meta name="description" content="Track seats, vacancies and terms, then link attendance to an existing Townlight meeting.">
+  <link rel="canonical" href="https://townlight.github.io/products/boards/">
+  <meta property="og:title" content="Townlight Boards &amp; Commissions">
+  <meta property="og:description" content="Track seats, vacancies and terms, then link attendance to an existing Townlight meeting.">
+  <meta property="og:image" content="https://townlight.github.io/brand/png/townlight-hall-social-preview.png">
+  <link rel="icon" href="https://townlight.github.io/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="https://townlight.github.io/brand/png/townlight-hall-app-icon-180.png">
+  <link rel="stylesheet" href="https://townlight.github.io/assets/site.css">
+  <link rel="stylesheet" href="https://townlight.github.io/assets/landing.css">
 </head>
-<body>
-<header>
-  <p class="eyebrow">Townlight / Townlight Boards</p>
-  <h1>Board service needs clean records before it needs ceremony.</h1>
-  <p class="lede">Townlight Boards v0.2.1 ships a foundation for board registry, term tracking, vacancy tracking, attendance review, optional database-backed roster records, notice/records export checklists, and an accessible sample UI aligned to townlight-core==1.3.0.dev2.</p>
-  <p><span class="badge">Shipping v0.2.1</span></p>
-</header>
-<main><section id="windows-current"><h2>Windows 1.9.3.2 current release</h2><p>Townlight for Windows 1.9.3.2 is the current signed public beta. <a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2">Release and downloads</a> · <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/ACCEPTANCE-Windows-1.9.3.2.md">Acceptance and limits</a></p><p>For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.9.3.2 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.1; earlier paths have separate prior evidence.</p></section><section id="windows-maintenance"><h2>Historical Windows 1.9.1.1 Station recorder release</h2><p>Windows 1.9.1.1 improves the clerk workflows for Records, Meetings, and Code, adds Open Hall icons, and fixes the ten-second Station preview.</p><p><a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.1.1">Release and downloads</a> · <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.1.1/ACCEPTANCE-Windows-1.9.1.1.md">Acceptance and limits</a></p></section>
-  <section class="grid">
-    <article class="card"><h2>What ships</h2><ul><li>Sample board registry.</li><li>Term review plans.</li><li>Vacancy checklists.</li><li>Attendance review flags.</li><li>Optional roster persistence with <code>TOWNLIGHT_BOARDS_ROSTER_DB_URL</code>.</li><li>Notice and records export checklist.</li><li>Public sample UI at <code>/townlight_boards</code>.</li></ul></article>
-    <article class="card"><h2>What does not ship</h2><p>Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or replace a board system of record.</p></article>
-    <article class="card"><h2>Repository</h2><p><a href="https://github.com/townlight/boards">github.com/CivicSuite/townlight_boards</a></p></article>
-    <article class="card"><h2>Dependency</h2><p>Pinned to <code>townlight-core==1.3.0.dev2</code>. Townlight Core remains dependency-only; it never imports from Townlight Boards.</p></article>
+<body class="landing">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="landing-wrap masthead-inner">
+      <a href="https://townlight.github.io/" aria-label="Townlight home">
+        <img src="https://townlight.github.io/brand/svg/townlight-hall-lockup.svg" alt="Townlight" width="161" height="34">
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="https://townlight.github.io/#products">Products</a>
+        <a href="https://townlight.github.io/manuals/boards.html">Guide</a>
+        <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/Townlight-Windows-x64-1.9.3.2.msi">Download</a>
+        <a href="https://github.com/townlight/boards">Source</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+  <section class="landing-hero" aria-labelledby="title">
+    <div class="landing-wrap hero-layout">
+      <div>
+        <div class="eyebrow">Townlight Boards &amp; Commissions / Clerk operations</div>
+        <h1 id="title">Keep a current roster and attendance record.</h1>
+        <p class="hero-copy">Track seats, vacancies and terms, then link attendance to an existing Townlight meeting.</p>
+        <div class="actions"><a href="https://townlight.github.io/manuals/boards.html" class="button primary">Read the operating guide</a><a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2" class="button">View Windows release</a></div>
+        <p class="release-line">Windows public beta · Townlight 1.9.3.2 · AGPL-3.0-only</p>
+      </div>
+      <figure class="workflow-sheet">
+      <figcaption><span class="eyebrow">Workflow guide</span>A board roster through attendance</figcaption>
+      <ol>
+        <li><strong>Create the board</strong><span>Record its name and staff liaison.</span></li>
+        <li><strong>Record the seats</strong><span>Enter an appointment and term dates, or record a vacancy.</span></li>
+        <li><strong>Link attendance</strong><span>Select the member and meeting, then open the linked Meetings record.</span></li>
+      </ol>
+      <p class="sheet-note">Illustrated workflow · staff review at each decision</p>
+    </figure>
+    </div>
   </section>
-<section id="meeting-imports"><h2>Shared meeting imports · Windows 1.8.1.1</h2><p>Windows 1.8.1.1 adds shared meeting imports for 31 source families, with 34 supported source/format pairs. Installed Windows Sandbox checks exercised preview, save and durable readback using public captures and fixtures, plus the documented Townlight handoffs. These checks do not establish automatic discovery on every live portal or a complete retest of every module.</p><p><a href="https://townlight.github.io/manuals/meeting-imports.html">All 31 sources, formats, operator steps and integration contracts</a> · <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.8.1.1/ACCEPTANCE-Windows-1.8.1.1.md">Installed acceptance and limits</a>.</p><p>Windows 1.9.1.1 contains Station 0.4.4, Records 1.8.0.dev4, Townlight Runtime 0.3.3 and Meetings 1.0.6. The release acceptance summary identifies the verified workflows and the builds that produced the evidence.</p></section></main>
-<footer><p>AGPL-3.0 code. CC BY 4.0 docs. Run locally by the city.</p></footer>
+  <section class="landing-section landing-band" aria-labelledby="candidate-boards">
+    <div class="landing-wrap">
+      <div class="eyebrow">Signed public beta · Windows 1.9.3.2</div>
+      <h2 id="candidate-boards">Windows 1.9.3.2</h2>
+      <p class="component-version">Townlight Boards &amp; Commissions v0.2.1 is packaged with Windows beta 1.9.3.2; distribution <code>townlight-boards</code>.</p>
+      <p class="section-intro">Private Records staff attachment downloads verify expected file size and SHA-256 before saving; Station operator controls work through session renewal. Release acceptance defines the tested workflows and limits; it does not claim every module was retested.</p>
+      <ul class="landing-link-list"><li><a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/Townlight-Windows-x64-1.9.3.2.msi">Windows 1.9.3.2 installer</a></li><li><a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2">Release catalog</a></li><li><a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/SHA256SUMS-Windows-1.9.3.2.txt">SHA-256 checksums</a></li><li><a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/ACCEPTANCE-Windows-1.9.3.2.md">Acceptance and limits</a></li></ul>
+    </div>
+  </section>
+  <section class="landing-section" aria-labelledby="capabilities">
+    <div class="landing-wrap">
+      <div class="eyebrow">Inside the workflow</div>
+      <h2 id="capabilities">What Boards &amp; Commissions supports</h2>
+      <div class="capability-columns">
+        <article><h3>Roster and vacancies</h3><p>Keep occupied and vacant seats visible together.</p></article>
+        <article><h3>Term visibility</h3><p>Review expired terms and those ending within 90 days.</p></article>
+        <article><h3>Meeting link</h3><p>Open the original meeting from the attendance history.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="landing-section landing-band" aria-labelledby="getting-started">
+    <div class="landing-wrap landing-split">
+      <div>
+        <div class="eyebrow">Evaluate locally</div>
+        <h2 id="getting-started">Start with one real workflow.</h2>
+        <p>Install the full Windows profile and sign in as a clerk, city staff member, or Townlight administrator.</p>
+        <ul class="landing-link-list"><li><a href="https://townlight.github.io/manuals/boards.html">Operating guide</a></li><li><a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2">Release and checksums</a></li></ul>
+      </div>
+      <div class="landing-panel">
+        <h3>Scope of this beta</h3>
+        <p>Staff enter appointments and attendance. The workspace preserves the linked meeting without changing it.</p>
+        <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/ACCEPTANCE-Windows-1.9.3.2.md">Read the installed acceptance</a>
+      </div>
+    </div>
+  </section>
+  <section class="landing-section" aria-labelledby="technical">
+    <div class="landing-wrap">
+      <div class="eyebrow">For technical teams</div>
+      <h2 id="technical">Inspect the implementation.</h2>
+      <p class="section-intro">Trace the workflow to the component source pinned by the Windows release. Use the reference for integration details and the repository to report an issue or contribute a change.</p>
+      <ul class="landing-link-list"><li><a href="https://github.com/townlight/boards/tree/06df86606fe8249c49b1450ff13a40a5ab0aa1e5">Released component source</a></li><li><a href="https://townlight.github.io/reference/native.html#municipal-staff">API reference</a></li><li><a href="https://townlight.github.io/manuals/windows-staff-workflows.html#boards">Windows staff workflow</a></li><li><a href="https://github.com/townlight/boards">Repository and contributions</a></li></ul>
+
+    </div>
+  </section>
+  </main>
+<aside class="release-note" aria-label="Current release"><p><strong>Current release:</strong> Townlight for Windows 1.9.3.2 is a signed public beta. Private Records staff attachment downloads verify expected file size and SHA-256 before saving; Station operator controls work through session renewal. Release acceptance defines tested workflows and limits; it does not claim every module was retested. <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/Townlight-Windows-x64-1.9.3.2.msi">Download MSI</a> · <a href="https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2">Release catalog</a> · <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/SHA256SUMS-Windows-1.9.3.2.txt">SHA-256 checksums</a> · <a href="https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/ACCEPTANCE-Windows-1.9.3.2.md">Acceptance and limits</a> · <a href="https://townlight.github.io/versions.html">Versions</a></p></aside>
+  <footer class="landing-footer">
+    <div class="landing-wrap">
+      <span>Townlight · Open source municipal software</span>
+      <ul class="landing-link-list"><li><a href="https://townlight.github.io/support.html">Support</a></li><li><a href="https://townlight.github.io/versions.html">Versions</a></li><li><a href="https://townlight.github.io/brand/">Brand</a></li><li><a href="https://townlight.github.io/terms.html">Terms and license</a></li></ul>
+    </div>
+  </footer>
 </body>
 </html>
