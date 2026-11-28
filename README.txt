@@ -1,8 +1,8 @@
-Windows 1.9.3.2 current release
+Windows 1.10.0.1 current release
 
-Townlight for Windows 1.9.3.2 is the current signed public beta. See the release notes and acceptance record.
+Townlight for Windows 1.10.0.1 is the current signed public beta. See the release notes and acceptance record.
 
-For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.9.3.2 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.1; earlier paths have separate prior evidence.
+For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.10.0.1 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.2; earlier paths have separate prior evidence.
 
 Windows 1.9.1.1 historical Station recorder release
 
@@ -24,7 +24,7 @@ Townlight Boards is the Townlight module for board and commission roster support
 
 In the Windows suite
 
-Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the signed Townlight Windows beta 1.9.3.2 and select the full profile. See the staff operating guide. The package examples below describe the standalone development interface.
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the signed Townlight Windows beta 1.10.0.1 and select the full profile. See the staff operating guide. The package examples below describe the standalone development interface.
 
 Current state: v0.2.1 board administration foundation plus roster persistence release. This repo ships a FastAPI package, health/root endpoints, documentation gates, deterministic sample board registry, term review plans, vacancy checklists, attendance summaries, optional database-backed board roster and attendance review records, notice/records export checklist, and accessible public sample UI at /townlight_boards, aligned to townlight-core==1.3.0.dev2. It does not ship live agenda systems, appointment decisions, legal advice, live LLM calls, official notice publication, meeting system write-back, or board system-of-record integrations.
 
