@@ -1,8 +1,8 @@
-## Windows 1.9.3.2 current release
+## Windows 1.10.0.1 current release
 
-Townlight for Windows 1.9.3.2 is the current signed public beta. See the [release notes](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2) and [acceptance record](https://github.com/townlight/townlight/releases/download/townlight-windows-v1.9.3.2/ACCEPTANCE-Windows-1.9.3.2.md).
+Townlight for Windows 1.10.0.1 is the current signed public beta. See the [release notes](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.10.0.1) and [acceptance record](https://github.com/townlight/townlight/releases/download/townlight-windows-v1.10.0.1/ACCEPTANCE-Windows-1.10.0.1.md).
 
-For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.9.3.2 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.1; earlier paths have separate prior evidence.
+For an existing city, make and verify a backup, close Townlight, run the signed Windows 1.10.0.1 MSI, then reopen Townlight under the same Windows account and existing profile. Direct upgrade is tested from 1.9.3.2; earlier paths have separate prior evidence.
 
 ## Windows 1.9.1.1 historical Station recorder release
 
@@ -29,7 +29,7 @@ Townlight Boards helps city staff keep board and commission rosters, member term
 
 ## In the Windows suite
 
-Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the [signed Townlight Windows beta 1.9.3.2](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.9.3.2) and select the full profile. See the [staff operating guide](https://townlight.github.io/manuals/windows-staff-workflows.html#boards). The package examples below describe the standalone development interface.
+Maintain board rosters, vacancies, terms, and attendance linked to existing Meetings records. Install the [signed Townlight Windows beta 1.10.0.1](https://github.com/townlight/townlight/releases/tag/townlight-windows-v1.10.0.1) and select the full profile. See the [staff operating guide](https://townlight.github.io/manuals/windows-staff-workflows.html#boards). The package examples below describe the standalone development interface.
 
 Current state: `0.2.1` board administration foundation plus roster persistence release. Townlight Boards can optionally save board roster and attendance review records when IT configures `TOWNLIGHT_BOARDS_ROSTER_DB_URL`. Townlight Boards does not appoint members, remove members, publish official notices, provide legal advice, call live LLMs, write back to meeting systems, or update a board system of record. Staff own every decision.
 
